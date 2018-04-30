@@ -54,7 +54,7 @@ import AVFoundation
 
             if (!self.isTimerExists) {
                 self.timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
-                self.timer.scheduleRepeating(deadline: .now(), interval: DispatchTimeInterval.milliseconds(300))
+                self.timer.scheduleRepeating(deadline: .now(), interval: DispatchTimeInterval.milliseconds(100))
                 self.timer.setEventHandler(handler: self.timerCallBack)
                 self.isTimerExists = true
             }
@@ -130,8 +130,7 @@ import AVFoundation
             if (self.isListening && self.audioRecorder != nil) {
                 self.audioRecorder.updateMeters()
 
-                let peakPowerForChannel = pow(10, (self.audioRecorder.averagePower(forChannel: 0) / 20))
-                let db = Int32(round(20 * log10(peakPowerForChannel) + 90))
+                let db = self.audioRecorder.averagePower(forChannel: 0)
 
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: db)
                 pluginResult!.setKeepCallbackAs(true)
