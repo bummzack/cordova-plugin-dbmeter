@@ -130,7 +130,7 @@ import AVFoundation
             if (self.isListening && self.audioRecorder != nil) {
                 self.audioRecorder.updateMeters()
 
-                let db = self.audioRecorder.averagePower(forChannel: 0)
+                let db = Double(self.audioRecorder.averagePower(forChannel: 0))
 
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: db)
                 pluginResult!.setKeepCallbackAs(true)
